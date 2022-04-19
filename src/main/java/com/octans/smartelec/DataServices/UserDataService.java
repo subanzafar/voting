@@ -1,6 +1,10 @@
 package com.octans.smartelec.DataServices;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.octans.smartelec.ApiResponse;
+import com.octans.smartelec.Models.Election;
 import com.octans.smartelec.Models.User;
 import com.octans.smartelec.Repositories.UserRepository;
 
@@ -19,6 +23,54 @@ public class UserDataService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    public ApiResponse allUsers() {
+        ApiResponse response = new ApiResponse();
+        try {
+            List<User> users = new ArrayList<>();
+            userRepository.findAll().forEach(u -> {
+                u.setEnrolledElection(null);
+                u.setMyElections(null);
+                // if (u.getEnrolledElection().getOwner() != null) {
+                // u.getEnrolledElection().setOwner(null);
+
+                // }
+                users.add(u);
+            });
+            response.setStatusCode(200);
+            response.setMessage("User Found!");
+            response.setData(users);
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occured!");
+            return response;
+        }
+    }
+
+    public ApiResponse allUsersOfElec(Election elec) {
+        ApiResponse response = new ApiResponse();
+        try {
+            List<User> users = new ArrayList<>();
+            userRepository.findAllByEnrolledElection(elec).forEach(u -> {
+                u.setEnrolledElection(null);
+                u.setMyElections(null);
+                // if (u.getEnrolledElection().getOwner() != null) {
+                // u.getEnrolledElection().setOwner(null);
+
+                // }
+                users.add(u);
+            });
+            response.setStatusCode(200);
+            response.setMessage("Users Found!");
+            response.setData(users);
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error occured!");
+            return response;
+        }
+    }
+
     public ApiResponse signUp(User user) {
         ApiResponse response = new ApiResponse();
         try {
@@ -28,11 +80,15 @@ public class UserDataService {
                 response.setStatusCode(200);
                 response.setMessage("User Created!");
                 response.setData(user);
+            } else {
+                System.out.println("noooo");
+                response.setStatusCode(500);
+                response.setMessage("Email already exists!");
             }
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Email already exists!");
+            response.setMessage("Error occured!");
             return response;
         }
     }
@@ -42,6 +98,8 @@ public class UserDataService {
 
         try {
             User existingUser = userRepository.findByEmailAndPassword(email, password);
+            existingUser.setEnrolledElection(null);
+            existingUser.setMyElections(null);
             response.setStatusCode(200);
             response.setMessage("Signed in User!");
             response.setData(existingUser);
@@ -67,7 +125,8 @@ public class UserDataService {
             SimpleMailMessage mail = new SimpleMailMessage();
             mail.setTo(email);
             mail.setSubject("Email Verification");
-            mail.setText(otp + " is the OTP for the verification.\nOTPs are secret. Therefore, do not disclose this to anyone.");
+            mail.setText(otp
+                    + " is the OTP for the verification.\nOTPs are secret. Therefore, do not disclose this to anyone.");
             javaMailSender.send(mail);
             response.setStatusCode(200);
             response.setMessage("Code Sent!");
@@ -87,7 +146,8 @@ public class UserDataService {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(email);
         mail.setSubject("Email Verification");
-        mail.setText(otp + " is the OTP for the verification.\nOTPs are secret. Therefore, do not disclose this to anyone.");
+        mail.setText(
+                otp + " is the OTP for the verification.\nOTPs are secret. Therefore, do not disclose this to anyone.");
         try {
             javaMailSender.send(mail);
         } catch (MailException e) {

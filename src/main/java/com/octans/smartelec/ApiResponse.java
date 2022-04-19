@@ -1,4 +1,4 @@
-package com.octans.smartelec;
+ package com.octans.smartelec;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

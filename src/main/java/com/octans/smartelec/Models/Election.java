@@ -1,7 +1,10 @@
 package com.octans.smartelec.Models;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,39 +24,39 @@ import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode.Include;
 
 @Entity
-@Table(name = "usertable")
+@Table(name = "election")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class User {
+public class Election {
     @Id
     @Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer oid;
-    private String name;
-    private String email;
-    private String bio;
+    private String seatName;
+    private String startDate;
+    private String endDate;
     private String emailDomain;
-    private String password;
-    private String mobile;
-    private String imageUrl;
-    private Integer status;
-    private Integer votes;
+    private String description;
+
+    @OneToMany(mappedBy = "enrolledElection")
+    List<User> users = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "oid_election", referencedColumnName = "oid")
-    Election enrolledElection;
+    @JoinColumn(name = "oid_owner", referencedColumnName = "oid")
+    User owner;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Election> myElections = new ArrayList<>();
+    public User addUser(User user) {
+        user.setEnrolledElection(this);
+        getUsers().add(user);
+        return user;
+    }
 
-    // @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // FinishedElection finishedElection;
-
-    // @OneToOne(mappedBy = "winner", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // FinishedElection finishedElection;
+    public User removeUser(User user) {
+        user.setEnrolledElection(null);
+        getUsers().remove(user);
+        return user;
+    }
 
 }

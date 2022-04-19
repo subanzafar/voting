@@ -3,8 +3,13 @@ package com.octans.smartelec.Controllers;
 import java.sql.SQLException;
 
 import com.octans.smartelec.ApiResponse;
+import com.octans.smartelec.DataServices.ElectionDataService;
+import com.octans.smartelec.DataServices.FinishedElectionDataService;
 import com.octans.smartelec.DataServices.UserDataService;
+import com.octans.smartelec.Models.Election;
 import com.octans.smartelec.Models.User;
+import com.octans.smartelec.Repositories.ElectionRepository;
+import com.octans.smartelec.Repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,14 +27,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 @ResponseBody
 @RestController
-@RequestMapping(path = "/abc/")
+@RequestMapping(path = "/auth/")
 public class AuthController {
 
     @Autowired
     UserDataService userDataService;
 
     @Autowired
+    ElectionRepository eRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     private JavaMailSender javaMailSender;
+
+    @GetMapping(path = "users")
+    public ApiResponse allUsers() {
+        return userDataService.allUsers();
+    }
+
+    @GetMapping(path = "elecCands/{elecId}")
+    public ApiResponse allUsersOfElec(@PathVariable Integer elecId) {
+        Election e = eRepository.findById(elecId).get();
+        return userDataService.allUsersOfElec(e);
+    }
 
     @GetMapping(path = "email/{email}")
     public ApiResponse sendEmail(@PathVariable String email) {
@@ -47,8 +69,25 @@ public class AuthController {
     }
 
     // @ResponseBody
-    @PostMapping(path = "signup", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
-            MediaType.APPLICATION_XML_VALUE })
+    // @PostMapping(path = "signup/{name}/{email}/{bio}/{pass}/{mob}/{img}",
+    // consumes = { MediaType.APPLICATION_JSON_VALUE,
+    // MediaType.APPLICATION_XML_VALUE }, produces = {
+    // MediaType.APPLICATION_JSON_VALUE,
+    // MediaType.APPLICATION_XML_VALUE })
+    // @PathVariable String name,
+    // @PathVariable
+    // String email,
+    // @PathVariable
+    // String bio,
+    // @PathVariable
+    // String pass,
+    // @PathVariable
+    // String mob,
+
+    // @PathVariable String img
+    @PostMapping(path = "signup", consumes = { MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE })
     public ApiResponse signUp(@RequestBody User user) {
         return userDataService.signUp(user);
     }
