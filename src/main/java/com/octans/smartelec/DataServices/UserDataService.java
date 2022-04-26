@@ -27,9 +27,9 @@ public class UserDataService {
         ApiResponse response = new ApiResponse();
         try {
             List<User> users = new ArrayList<>();
-            userRepository.findAll().forEach(u -> {
+            userRepository.findByEnrolledElectionIsNull().forEach(u -> {
                 u.setEnrolledElection(null);
-                u.setMyElections(null);
+                // u.setMyElections(null);
                 // if (u.getEnrolledElection().getOwner() != null) {
                 // u.getEnrolledElection().setOwner(null);
 
@@ -53,7 +53,7 @@ public class UserDataService {
             List<User> users = new ArrayList<>();
             userRepository.findAllByEnrolledElection(elec).forEach(u -> {
                 u.setEnrolledElection(null);
-                u.setMyElections(null);
+                // u.setMyElections(null);
                 // if (u.getEnrolledElection().getOwner() != null) {
                 // u.getEnrolledElection().setOwner(null);
 
@@ -88,7 +88,7 @@ public class UserDataService {
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Error occured!");
+            response.setMessage(e.getMessage());
             return response;
         }
     }
@@ -99,7 +99,7 @@ public class UserDataService {
         try {
             User existingUser = userRepository.findByEmailAndPassword(email, password);
             existingUser.setEnrolledElection(null);
-            existingUser.setMyElections(null);
+            // existingUser.setMyElections(null);
             response.setStatusCode(200);
             response.setMessage("Signed in User!");
             response.setData(existingUser);
@@ -110,6 +110,22 @@ public class UserDataService {
             return response;
         }
 
+    }
+
+    public ApiResponse userExists(String email) {
+        ApiResponse response = new ApiResponse();
+
+        try {
+            User existingUser = userRepository.findByEmail(email);
+            response.setStatusCode(200);
+            response.setMessage("No User!");
+            response.setData(existingUser == null);
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("User doesn\'t exists!");
+            return response;
+        }
     }
 
     public ApiResponse forgotPassword(String email) {
@@ -152,7 +168,7 @@ public class UserDataService {
             javaMailSender.send(mail);
         } catch (MailException e) {
             response.setStatusCode(500);
-            response.setMessage(e.getMessage());
+            response.setMessage(e.getLocalizedMessage());
             return response;
         }
         response.setStatusCode(200);

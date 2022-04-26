@@ -8,6 +8,7 @@ import com.octans.smartelec.DataServices.ElectionDataService;
 import com.octans.smartelec.DataServices.FinishedElectionDataService;
 import org.springframework.http.MediaType;
 import com.octans.smartelec.Models.Election;
+import com.octans.smartelec.Models.FinishedElection;
 import com.octans.smartelec.Models.User;
 import com.octans.smartelec.Repositories.UserRepository;
 
@@ -45,6 +46,11 @@ public class ElectionController {
         return electionDataService.allElection(domain);
     }
 
+    @GetMapping(path = "ownerelections/{domain}/{id}")
+    public ApiResponse ownerElections(@PathVariable String domain, @PathVariable Integer id) {
+        return electionDataService.allElectionOfOwner(id, domain);
+    }
+
     @GetMapping(path = "electionbyid/{id}")
     public ApiResponse electionById(@PathVariable Integer id) {
         return electionDataService.electionById(id);
@@ -71,9 +77,32 @@ public class ElectionController {
         return electionDataService.createElection(election);
     }
 
+    @PostMapping(path = "newFinishElection", consumes = { MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE })
+    public ApiResponse crearteFinishedElection(@RequestBody FinishedElection election) {
+        // Election el = election;
+        // el.getUsers().clear();
+        // election.getUsers().forEach(u -> {
+        // User user = userRepository.findById(u.getOid()).get();
+        // el.addUser(user);
+        // });
+        return finishedElectionDataService.saveNew(election);
+    }
+
     @GetMapping(path = "assignElection/{userId}/{elecId}")
     public void assignElection(@PathVariable Integer userId, @PathVariable Integer elecId) {
         electionDataService.assignElection(userId, elecId);
+    }
+
+    @GetMapping(path = "deleteElection/{elecId}")
+    public void assignElection(@PathVariable Integer elecId) {
+        electionDataService.deleteElection(elecId);
+    }
+
+    @GetMapping(path = "removeElection/{userId}")
+    public void removeElection(@PathVariable Integer userId) {
+        electionDataService.removeElection(userId);
     }
 
     @GetMapping(path = "votedetail/{userId}/{elecId}")

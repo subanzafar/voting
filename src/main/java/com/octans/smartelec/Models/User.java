@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,8 +47,8 @@ public class User {
     @JoinColumn(name = "oid_election", referencedColumnName = "oid")
     Election enrolledElection;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Election> myElections = new ArrayList<>();
+    // @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    // List<Election> myElections = new ArrayList<>();
 
     // @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval =
     // true)

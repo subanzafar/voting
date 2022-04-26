@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface FinishedElectionRepository extends JpaRepository<FinishedElection, Integer> {
 
     List<FinishedElection> findAllByDomain(String domain);
+    
 }

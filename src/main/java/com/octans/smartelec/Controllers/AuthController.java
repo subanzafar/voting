@@ -58,6 +58,11 @@ public class AuthController {
         return userDataService.sendEmail(email);
     }
 
+    @GetMapping(path = "userexists/{email}")
+    public ApiResponse userExists(@PathVariable String email) {
+        return userDataService.userExists(email);
+    }
+
     @GetMapping(path = "test")
     public String test() {
         return "Helloo";

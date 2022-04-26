@@ -40,23 +40,23 @@ public class Election {
     private String emailDomain;
     private String description;
 
-    @OneToMany(mappedBy = "enrolledElection")
-    List<User> users = new ArrayList<>();
+    // @OneToMany(mappedBy = "enrolledElection", cascade = CascadeType.ALL, orphanRemoval = true)
+    // List<User> users = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "oid_owner", referencedColumnName = "oid")
     User owner;
 
-    public User addUser(User user) {
-        user.setEnrolledElection(this);
-        getUsers().add(user);
-        return user;
-    }
+    // public User addUser(User user) {
+    //     user.setEnrolledElection(this);
+    //     getUsers().add(user);
+    //     return user;
+    // }
 
-    public User removeUser(User user) {
-        user.setEnrolledElection(null);
-        getUsers().remove(user);
-        return user;
-    }
+    // public User removeUser(User user) {
+    //     user.setEnrolledElection(null);
+    //     getUsers().remove(user);
+    //     return user;
+    // }
 
 }

@@ -3,6 +3,7 @@ package com.octans.smartelec.Repositories;
 import java.util.List;
 
 import com.octans.smartelec.Models.Election;
+import com.octans.smartelec.Models.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +16,8 @@ public interface ElectionRepository extends JpaRepository<Election, Integer> {
     // nativeQuery = true)
     // void saveVoteDetail(Integer oid_elec, Integer oid_user);
 
-    
-
     List<Election> findAllByEmailDomain(String emailDomain);
+
+    List<Election> findAllByOwnerAndEmailDomain(User owner, String emailDomain);
+
 }

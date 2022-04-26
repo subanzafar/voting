@@ -29,4 +29,19 @@ public class FinishedElectionDataService {
             return response;
         }
     }
+
+    public ApiResponse saveNew(FinishedElection fElection) {
+        ApiResponse response = new ApiResponse();
+        try {
+            FinishedElection e = repo.save(fElection);
+            response.setStatusCode(200);
+            response.setMessage("Elections saved!");
+            response.setData(e);
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
 }

@@ -36,7 +36,28 @@ public class ElectionDataService {
         try {
             List<Election> elections = electionRepo.findAllByEmailDomain(domain);
             elections.forEach(elc -> {
-                elc.setUsers(null);
+                // elc.setUsers(null);
+                elc.setOwner(null);
+            });
+
+            response.setStatusCode(200);
+            response.setMessage("Elections Found!");
+            response.setData(elections);
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
+
+    public ApiResponse allElectionOfOwner(Integer id, String domain) {
+        ApiResponse response = new ApiResponse();
+        try {
+            User owner = userRepository.findById(id).get();
+            List<Election> elections = electionRepo.findAllByOwnerAndEmailDomain(owner, domain);
+            elections.forEach(elc -> {
+                // elc.setUsers(null);
                 elc.setOwner(null);
             });
 
@@ -55,6 +76,17 @@ public class ElectionDataService {
         Election election = electionRepo.findById(electionId).get();
         userRepository.findById(userId).map(u -> {
             u.setEnrolledElection(election);
+            return userRepository.save(u);
+        });
+    }
+
+    public void deleteElection(Integer electionId) {
+        electionRepo.deleteById(electionId);
+    }
+
+    public void removeElection(Integer userId) {
+        userRepository.findById(userId).map(u -> {
+            u.setEnrolledElection(null);
             return userRepository.save(u);
         });
     }
