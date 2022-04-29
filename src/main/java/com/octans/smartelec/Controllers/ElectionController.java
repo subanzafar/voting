@@ -1,15 +1,11 @@
 package com.octans.smartelec.Controllers;
 
-import java.sql.Date;
-import java.util.List;
-
 import com.octans.smartelec.ApiResponse;
 import com.octans.smartelec.DataServices.ElectionDataService;
 import com.octans.smartelec.DataServices.FinishedElectionDataService;
 import org.springframework.http.MediaType;
 import com.octans.smartelec.Models.Election;
 import com.octans.smartelec.Models.FinishedElection;
-import com.octans.smartelec.Models.User;
 import com.octans.smartelec.Repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,7 +86,7 @@ public class ElectionController {
     }
 
     @GetMapping(path = "assignElection/{userId}/{elecId}")
-    public void assignElection(@PathVariable Integer userId, @PathVariable Integer elecId) {
+    public void assignElection(@PathVariable String userId, @PathVariable Integer elecId) {
         electionDataService.assignElection(userId, elecId);
     }
 
@@ -101,7 +96,7 @@ public class ElectionController {
     }
 
     @GetMapping(path = "removeElection/{userId}")
-    public void removeElection(@PathVariable Integer userId) {
+    public void removeElection(@PathVariable String userId) {
         electionDataService.removeElection(userId);
     }
 
@@ -116,7 +111,7 @@ public class ElectionController {
     }
 
     @GetMapping(path = "castvote/{userId}")
-    public ApiResponse casteVote(@PathVariable Integer userId) {
+    public ApiResponse casteVote(@PathVariable String userId) {
         return electionDataService.casteVote(userId);
     }
 }

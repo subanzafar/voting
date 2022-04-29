@@ -1,8 +1,5 @@
 package com.octans.smartelec.DataServices;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.octans.smartelec.ApiResponse;
 import com.octans.smartelec.Models.FinishedElection;
 import com.octans.smartelec.Repositories.FinishedElectionRepository;

@@ -1,8 +1,5 @@
 package com.octans.smartelec.DataServices;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.octans.smartelec.ApiResponse;
 import com.octans.smartelec.Models.Election;
 import com.octans.smartelec.Models.User;
@@ -26,19 +23,9 @@ public class UserDataService {
     public ApiResponse allUsers() {
         ApiResponse response = new ApiResponse();
         try {
-            List<User> users = new ArrayList<>();
-            userRepository.findByEnrolledElectionIsNull().forEach(u -> {
-                u.setEnrolledElection(null);
-                // u.setMyElections(null);
-                // if (u.getEnrolledElection().getOwner() != null) {
-                // u.getEnrolledElection().setOwner(null);
-
-                // }
-                users.add(u);
-            });
             response.setStatusCode(200);
             response.setMessage("User Found!");
-            response.setData(users);
+            response.setData(userRepository.findByElectionIdIsNull());
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
@@ -50,19 +37,9 @@ public class UserDataService {
     public ApiResponse allUsersOfElec(Election elec) {
         ApiResponse response = new ApiResponse();
         try {
-            List<User> users = new ArrayList<>();
-            userRepository.findAllByEnrolledElection(elec).forEach(u -> {
-                u.setEnrolledElection(null);
-                // u.setMyElections(null);
-                // if (u.getEnrolledElection().getOwner() != null) {
-                // u.getEnrolledElection().setOwner(null);
-
-                // }
-                users.add(u);
-            });
             response.setStatusCode(200);
             response.setMessage("Users Found!");
-            response.setData(users);
+            response.setData(userRepository.findAllByElectionId(elec.getOid()));
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
@@ -74,17 +51,11 @@ public class UserDataService {
     public ApiResponse signUp(User user) {
         ApiResponse response = new ApiResponse();
         try {
-            User existingUser = userRepository.findByEmail(user.getEmail());
-            if (existingUser == null) {
-                userRepository.save(user);
-                response.setStatusCode(200);
-                response.setMessage("User Created!");
-                response.setData(user);
-            } else {
-                System.out.println("noooo");
-                response.setStatusCode(500);
-                response.setMessage("Email already exists!");
-            }
+            userRepository.save(user);
+            response.setStatusCode(200);
+            response.setMessage("User Created!");
+            response.setData(user);
+
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
@@ -93,24 +64,24 @@ public class UserDataService {
         }
     }
 
-    public ApiResponse signIn(String email, String password) {
-        ApiResponse response = new ApiResponse();
+    // public ApiResponse signIn(String email, String password) {
+    // ApiResponse response = new ApiResponse();
 
-        try {
-            User existingUser = userRepository.findByEmailAndPassword(email, password);
-            existingUser.setEnrolledElection(null);
-            // existingUser.setMyElections(null);
-            response.setStatusCode(200);
-            response.setMessage("Signed in User!");
-            response.setData(existingUser);
-            return response;
-        } catch (Exception e) {
-            response.setStatusCode(500);
-            response.setMessage("User doesn\'t exists!");
-            return response;
-        }
+    // try {
+    // User existingUser = userRepository.findByEmailAndPassword(email, password);
+    // existingUser.setEnrolledElection(null);
+    // // existingUser.setMyElections(null);
+    // response.setStatusCode(200);
+    // response.setMessage("Signed in User!");
+    // response.setData(existingUser);
+    // return response;
+    // } catch (Exception e) {
+    // response.setStatusCode(500);
+    // response.setMessage("User doesn\'t exists!");
+    // return response;
+    // }
 
-    }
+    // }
 
     public ApiResponse userExists(String email) {
         ApiResponse response = new ApiResponse();

@@ -1,10 +1,6 @@
 package com.octans.smartelec.Controllers;
 
-import java.sql.SQLException;
-
 import com.octans.smartelec.ApiResponse;
-import com.octans.smartelec.DataServices.ElectionDataService;
-import com.octans.smartelec.DataServices.FinishedElectionDataService;
 import com.octans.smartelec.DataServices.UserDataService;
 import com.octans.smartelec.Models.Election;
 import com.octans.smartelec.Models.User;
@@ -13,13 +9,9 @@ import com.octans.smartelec.Repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,9 +30,6 @@ public class AuthController {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    private JavaMailSender javaMailSender;
 
     @GetMapping(path = "users")
     public ApiResponse allUsers() {
@@ -68,10 +57,11 @@ public class AuthController {
         return "Helloo";
     }
 
-    @GetMapping(path = "signin/{email}/{pass}")
-    public ApiResponse signIn(@PathVariable String email, @PathVariable String pass) {
-        return userDataService.signIn(email, pass);
-    }
+    // @GetMapping(path = "signin/{email}/{pass}")
+    // public ApiResponse signIn(@PathVariable String email, @PathVariable String
+    // pass) {
+    // return userDataService.signIn(email, pass);
+    // }
 
     // @ResponseBody
     // @PostMapping(path = "signup/{name}/{email}/{bio}/{pass}/{mob}/{img}",

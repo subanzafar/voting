@@ -1,20 +1,9 @@
 package com.octans.smartelec.Models;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -39,24 +28,6 @@ public class Election {
     private String endDate;
     private String emailDomain;
     private String description;
-
-    // @OneToMany(mappedBy = "enrolledElection", cascade = CascadeType.ALL, orphanRemoval = true)
-    // List<User> users = new ArrayList<>();
-
-    @ManyToOne
-    @JoinColumn(name = "oid_owner", referencedColumnName = "oid")
-    User owner;
-
-    // public User addUser(User user) {
-    //     user.setEnrolledElection(this);
-    //     getUsers().add(user);
-    //     return user;
-    // }
-
-    // public User removeUser(User user) {
-    //     user.setEnrolledElection(null);
-    //     getUsers().remove(user);
-    //     return user;
-    // }
+    private Integer ownerId;
 
 }

@@ -1,12 +1,9 @@
 package com.octans.smartelec.DataServices;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.octans.smartelec.ApiResponse;
 import com.octans.smartelec.Models.Election;
-import com.octans.smartelec.Models.FinishedElection;
-import com.octans.smartelec.Models.User;
 import com.octans.smartelec.Models.VoteDetail;
 import com.octans.smartelec.Repositories.ElectionRepository;
 import com.octans.smartelec.Repositories.FinishedElectionRepository;
@@ -34,15 +31,9 @@ public class ElectionDataService {
     public ApiResponse allElection(String domain) {
         ApiResponse response = new ApiResponse();
         try {
-            List<Election> elections = electionRepo.findAllByEmailDomain(domain);
-            elections.forEach(elc -> {
-                // elc.setUsers(null);
-                elc.setOwner(null);
-            });
-
             response.setStatusCode(200);
             response.setMessage("Elections Found!");
-            response.setData(elections);
+            response.setData(electionRepo.findAllByEmailDomain(domain));
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
@@ -54,13 +45,7 @@ public class ElectionDataService {
     public ApiResponse allElectionOfOwner(Integer id, String domain) {
         ApiResponse response = new ApiResponse();
         try {
-            User owner = userRepository.findById(id).get();
-            List<Election> elections = electionRepo.findAllByOwnerAndEmailDomain(owner, domain);
-            elections.forEach(elc -> {
-                // elc.setUsers(null);
-                elc.setOwner(null);
-            });
-
+            List<Election> elections = electionRepo.findAllByOwnerIdAndEmailDomain(id, domain);
             response.setStatusCode(200);
             response.setMessage("Elections Found!");
             response.setData(elections);
@@ -72,10 +57,9 @@ public class ElectionDataService {
         }
     }
 
-    public void assignElection(Integer userId, Integer electionId) {
-        Election election = electionRepo.findById(electionId).get();
+    public void assignElection(String userId, Integer electionId) {
         userRepository.findById(userId).map(u -> {
-            u.setEnrolledElection(election);
+            u.setElectionId(electionId);
             return userRepository.save(u);
         });
     }
@@ -84,14 +68,14 @@ public class ElectionDataService {
         electionRepo.deleteById(electionId);
     }
 
-    public void removeElection(Integer userId) {
+    public void removeElection(String userId) {
         userRepository.findById(userId).map(u -> {
-            u.setEnrolledElection(null);
+            u.setElectionId(null);
             return userRepository.save(u);
         });
     }
 
-    public ApiResponse casteVote(Integer userId) {
+    public ApiResponse casteVote(String userId) {
         ApiResponse response = new ApiResponse();
         try {
             userRepository.findById(userId).map(u -> {
