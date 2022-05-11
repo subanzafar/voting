@@ -24,6 +24,6 @@ public class VoteDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer oid;
 
-    private Integer userId;
+    private String userId;
     private Integer electionId;
 }

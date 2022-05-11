@@ -47,10 +47,10 @@ public class AuthController {
         return userDataService.sendEmail(email);
     }
 
-    @GetMapping(path = "userexists/{email}")
-    public ApiResponse userExists(@PathVariable String email) {
-        return userDataService.userExists(email);
-    }
+    // @GetMapping(path = "userexists/{email}")
+    // public ApiResponse userExists(@PathVariable String email) {
+    // return userDataService.userExists(email);
+    // }
 
     @GetMapping(path = "test")
     public String test() {
@@ -80,21 +80,27 @@ public class AuthController {
     // String mob,
 
     // @PathVariable String img
-    @PostMapping(path = "signup", consumes = { MediaType.APPLICATION_JSON_VALUE,
-            MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE })
-    public ApiResponse signUp(@RequestBody User user) {
+    @GetMapping(path = "signup/{oid}/{domain}")
+    public ApiResponse signUp(@PathVariable String oid, @PathVariable String domain) {
+        User user = new User();
+        user.setUserId(oid);
+        user.setEmailDomain(domain);
+        user.setName("No Name");
+        user.setElectionId(0);
+        user.setImageUrl("img");
+        user.setVotes(0);
         return userDataService.signUp(user);
     }
 
-    @GetMapping(path = "forgot/{email}")
-    public ApiResponse forgotPassword(@PathVariable String email) {
-        return userDataService.forgotPassword(email);
-    }
+    // @GetMapping(path = "forgot/{email}")
+    // public ApiResponse forgotPassword(@PathVariable String email) {
+    // return userDataService.forgotPassword(email);
+    // }
 
-    @PostMapping(path = "update/{email}/{pass}")
-    public ApiResponse updatePassword(@PathVariable String email, @PathVariable String pass) {
-        return userDataService.updatePassword(email, pass);
-    }
+    // @PostMapping(path = "update/{email}/{pass}")
+    // public ApiResponse updatePassword(@PathVariable String email, @PathVariable
+    // String pass) {
+    // return userDataService.updatePassword(email, pass);
+    // }
 
 }

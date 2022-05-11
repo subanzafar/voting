@@ -42,7 +42,7 @@ public class ElectionController {
     }
 
     @GetMapping(path = "ownerelections/{domain}/{id}")
-    public ApiResponse ownerElections(@PathVariable String domain, @PathVariable Integer id) {
+    public ApiResponse ownerElections(@PathVariable String domain, @PathVariable String id) {
         return electionDataService.allElectionOfOwner(id, domain);
     }
 
@@ -101,12 +101,12 @@ public class ElectionController {
     }
 
     @GetMapping(path = "votedetail/{userId}/{elecId}")
-    public ApiResponse saveVoteDetail(@PathVariable Integer userId, @PathVariable Integer elecId) {
+    public ApiResponse saveVoteDetail(@PathVariable String userId, @PathVariable Integer elecId) {
         return electionDataService.saveVoteDetail(userId, elecId);
     }
 
     @GetMapping(path = "getdetail/{userId}/{elecId}")
-    public ApiResponse getVoteDetail(@PathVariable Integer userId, @PathVariable Integer elecId) {
+    public ApiResponse getVoteDetail(@PathVariable String userId, @PathVariable Integer elecId) {
         return electionDataService.getVoteDetail(userId, elecId);
     }
 

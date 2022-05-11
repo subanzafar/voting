@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VoteDetailRepository extends JpaRepository<VoteDetail, Integer> {
 
-    List<VoteDetail> findAllByUserIdAndElectionId(Integer userId, Integer electionId);
+    List<VoteDetail> findAllByUserIdAndElectionId(String userId, Integer electionId);
 
     // @Query(value = "select * from user_elec where user_id = ?2 and election_id =
     // ?1", nativeQuery = true)

@@ -42,7 +42,7 @@ public class ElectionDataService {
         }
     }
 
-    public ApiResponse allElectionOfOwner(Integer id, String domain) {
+    public ApiResponse allElectionOfOwner(String id, String domain) {
         ApiResponse response = new ApiResponse();
         try {
             List<Election> elections = electionRepo.findAllByOwnerIdAndEmailDomain(id, domain);
@@ -93,7 +93,7 @@ public class ElectionDataService {
         }
     }
 
-    public ApiResponse saveVoteDetail(Integer userId, Integer elecId) {
+    public ApiResponse saveVoteDetail(String userId, Integer elecId) {
         ApiResponse response = new ApiResponse();
         VoteDetail voteDetail = new VoteDetail();
         try {
@@ -111,7 +111,7 @@ public class ElectionDataService {
         }
     }
 
-    public ApiResponse getVoteDetail(Integer userId, Integer elecId) {
+    public ApiResponse getVoteDetail(String userId, Integer elecId) {
         ApiResponse response = new ApiResponse();
         try {
             List<VoteDetail> voteDetail = vRepository.findAllByUserIdAndElectionId(userId, elecId);

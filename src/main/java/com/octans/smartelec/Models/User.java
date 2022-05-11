@@ -22,27 +22,12 @@ public class User {
     @Id
     @Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String oid;
+    private Integer oid;
+    private String userId;
     private String name;
-    private String email;
-    // private String bio;
     private String emailDomain;
-    private String password;
-    private String mobile;
     private String imageUrl;
     private Integer votes;
     private Integer electionId;
-
-    // @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // List<Election> myElections = new ArrayList<>();
-
-    // @OneToOne(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // FinishedElection finishedElection;
-
-    // @OneToOne(mappedBy = "winner", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // FinishedElection finishedElection;
 
 }

@@ -16,6 +16,6 @@ public interface ElectionRepository extends JpaRepository<Election, Integer> {
 
     List<Election> findAllByEmailDomain(String emailDomain);
 
-    List<Election> findAllByOwnerIdAndEmailDomain(Integer ownerId, String emailDomain);
+    List<Election> findAllByOwnerIdAndEmailDomain(String ownerId, String emailDomain);
 
 }
