@@ -39,10 +39,10 @@ public class AuthController {
         return userDataService.allUsersOfElec(e);
     }
 
-    @GetMapping(path = "email/{email}")
-    public ApiResponse sendEmail(@PathVariable String email) {
-        return userDataService.sendEmail(email);
-    }
+    // @GetMapping(path = "email/{email}")
+    // public ApiResponse sendEmail(@PathVariable String email) {
+    // return userDataService.sendEmail(email);
+    // }
 
     // @GetMapping(path = "userexists/{email}")
     // public ApiResponse userExists(@PathVariable String email) {
