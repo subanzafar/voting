@@ -1,7 +1,6 @@
 package com.octans.smartelec.DataServices;
 
 import com.octans.smartelec.ApiResponse;
-import com.octans.smartelec.Models.Election;
 import com.octans.smartelec.Models.User;
 import com.octans.smartelec.Repositories.UserRepository;
 
@@ -14,12 +13,12 @@ public class UserDataService {
     @Autowired
     private UserRepository userRepository;
 
-    public ApiResponse allUsers() {
+    public ApiResponse allUsers(String domain) {
         ApiResponse response = new ApiResponse();
         try {
             response.setStatusCode(200);
             response.setMessage("User Found!");
-            response.setData(userRepository.findByElectionIdIsNull());
+            response.setData(userRepository.findByElectionIdAndEmailDomain(0, domain));
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
@@ -28,12 +27,12 @@ public class UserDataService {
         }
     }
 
-    public ApiResponse allUsersOfElec(Election elec) {
+    public ApiResponse allUsersOfElec(int elecId) {
         ApiResponse response = new ApiResponse();
         try {
             response.setStatusCode(200);
             response.setMessage("Users Found!");
-            response.setData(userRepository.findAllByElectionId(elec.getOid()));
+            response.setData(userRepository.findAllByElectionId(elecId));
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);

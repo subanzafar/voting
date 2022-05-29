@@ -16,6 +16,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     List<User> findAllByElectionId(Integer electionId);
 
-    List<User> findByElectionIdIsNull();
+    List<User> findByElectionIdAndEmailDomain(Integer electionId, String emailDomain);
 
 }

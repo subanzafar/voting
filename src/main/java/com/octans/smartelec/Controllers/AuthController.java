@@ -2,7 +2,6 @@ package com.octans.smartelec.Controllers;
 
 import com.octans.smartelec.ApiResponse;
 import com.octans.smartelec.DataServices.UserDataService;
-import com.octans.smartelec.Models.Election;
 import com.octans.smartelec.Models.User;
 import com.octans.smartelec.Repositories.ElectionRepository;
 import com.octans.smartelec.Repositories.UserRepository;
@@ -28,15 +27,14 @@ public class AuthController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping(path = "users")
-    public ApiResponse allUsers() {
-        return userDataService.allUsers();
+    @GetMapping(path = "users/{domain}")
+    public ApiResponse allUsers(@PathVariable String domain) {
+        return userDataService.allUsers(domain);
     }
 
     @GetMapping(path = "elecCands/{elecId}")
     public ApiResponse allUsersOfElec(@PathVariable Integer elecId) {
-        Election e = eRepository.findById(elecId).get();
-        return userDataService.allUsersOfElec(e);
+        return userDataService.allUsersOfElec(elecId);
     }
 
     // @GetMapping(path = "email/{email}")
