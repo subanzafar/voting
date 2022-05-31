@@ -28,6 +28,6 @@ public class Election {
     private String endDate;
     private String emailDomain;
     private String description;
-    private Integer ownerId;
+    private String ownerId;
 
 }
