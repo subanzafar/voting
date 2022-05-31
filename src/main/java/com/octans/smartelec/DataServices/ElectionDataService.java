@@ -140,7 +140,7 @@ public class ElectionDataService {
             }
             response.setStatusCode(200);
             response.setMessage("Election Created!");
-            response.setData(election.getOid());
+            response.setData(el.getOid());
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
