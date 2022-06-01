@@ -58,7 +58,7 @@ public class ElectionDataService {
     }
 
     public void assignElection(String userId, Integer electionId) {
-        userRepository.findById(userId).map(u -> {
+        userRepository.findByUserId(userId).map(u -> {
             u.setElectionId(electionId);
             return userRepository.save(u);
         });
@@ -69,7 +69,7 @@ public class ElectionDataService {
     }
 
     public void removeElection(String userId) {
-        userRepository.findById(userId).map(u -> {
+        userRepository.findByUserId(userId).map(u -> {
             u.setElectionId(null);
             return userRepository.save(u);
         });
@@ -78,7 +78,7 @@ public class ElectionDataService {
     public ApiResponse casteVote(String userId) {
         ApiResponse response = new ApiResponse();
         try {
-            userRepository.findById(userId).map(u -> {
+            userRepository.findByUserId(userId).map(u -> {
                 u.setVotes(u.getVotes() + 1);
                 response.setData(u.getVotes());
                 return userRepository.save(u);

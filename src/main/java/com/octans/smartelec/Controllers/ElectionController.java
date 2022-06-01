@@ -59,22 +59,12 @@ public class ElectionController {
     // String description,
     // @PathVariable Integer ownerId, @PathVariable String usersIds) {
 
-    @PostMapping(path = "newElection", consumes = { MediaType.APPLICATION_JSON_VALUE,
-            MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE })
+    @PostMapping(path = "newElection", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse crearteElection(@RequestBody Election election) {
-        // Election el = election;
-        // el.getUsers().clear();
-        // election.getUsers().forEach(u -> {
-        // User user = userRepository.findById(u.getOid()).get();
-        // el.addUser(user);
-        // });
         return electionDataService.createElection(election);
     }
 
-    @PostMapping(path = "newFinishElection", consumes = { MediaType.APPLICATION_JSON_VALUE,
-            MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE })
+    @PostMapping(path = "newFinishElection", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse crearteFinishedElection(@RequestBody FinishedElection election) {
         // Election el = election;
         // el.getUsers().clear();
