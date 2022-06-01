@@ -59,7 +59,7 @@ public class ElectionController {
     // String description,
     // @PathVariable Integer ownerId, @PathVariable String usersIds) {
 
-    @PostMapping(path = "newElection/{seat}/{des}/{sDate}/{eDate}/{domain}/{ownerid}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "newElection/{seat}/{des}/{sDate}/{eDate}/{domain}/{ownerid}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse crearteElection(@PathVariable String seat, @PathVariable String des, @PathVariable String sDate,
             @PathVariable String eDate, @PathVariable String domain, @PathVariable String ownerid) {
         Election el = new Election();
