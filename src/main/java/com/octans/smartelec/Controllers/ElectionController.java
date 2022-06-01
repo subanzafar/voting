@@ -59,9 +59,17 @@ public class ElectionController {
     // String description,
     // @PathVariable Integer ownerId, @PathVariable String usersIds) {
 
-    @PostMapping(path = "newElection", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse crearteElection(@RequestBody Election election) {
-        return electionDataService.createElection(election);
+    @PostMapping(path = "newElection/{seat}/{des}/{sDate}/{eDate}/{domain}/{ownerid}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse crearteElection(@PathVariable String seat, @PathVariable String des, @PathVariable String sDate,
+            @PathVariable String eDate, @PathVariable String domain, @PathVariable String ownerid) {
+        Election el = new Election();
+        el.setSeatName(seat);
+        el.setDescription(des);
+        el.setEmailDomain(domain);
+        el.setEndDate(eDate);
+        el.setOwnerId(ownerid);
+        el.setStartDate(sDate);
+        return electionDataService.createElection(el);
     }
 
     @PostMapping(path = "newFinishElection", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

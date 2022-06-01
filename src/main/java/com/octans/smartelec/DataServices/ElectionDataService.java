@@ -135,12 +135,9 @@ public class ElectionDataService {
         try {
 
             Election el = electionRepo.save(election);
-            if (el != null) {
-                System.out.println("savedddddd");
-            }
             response.setStatusCode(200);
             response.setMessage("Election Created!");
-            response.setData(el.getOid());
+            response.setData(el);
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
