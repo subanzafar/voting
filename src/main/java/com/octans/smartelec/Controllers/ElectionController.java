@@ -72,6 +72,12 @@ public class ElectionController {
         return electionDataService.createElection(el);
     }
 
+    @GetMapping(path = "editElection/{seat}/{des}/{eDate}/{id}")
+    public ApiResponse updateteElection(@PathVariable String seat, @PathVariable String des,
+            @PathVariable String eDate, @PathVariable Integer id) {
+        return electionDataService.updateElection(id, seat, des, eDate);
+    }
+
     @PostMapping(path = "newFinishElection", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse crearteFinishedElection(@RequestBody FinishedElection election) {
         // Election el = election;
@@ -89,7 +95,7 @@ public class ElectionController {
     }
 
     @GetMapping(path = "deleteElection/{elecId}")
-    public void assignElection(@PathVariable Integer elecId) {
+    public void deleteElection(@PathVariable Integer elecId) {
         electionDataService.deleteElection(elecId);
     }
 

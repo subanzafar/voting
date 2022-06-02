@@ -42,6 +42,25 @@ public class ElectionDataService {
         }
     }
 
+    public ApiResponse updateElection(Integer id, String name, String des, String endDate) {
+        ApiResponse response = new ApiResponse();
+        try {
+            response.setData(electionRepo.findById(id).map(e -> {
+                e.setDescription(des);
+                e.setEndDate(endDate);
+                e.setSeatName(name);
+                return electionRepo.save(e);
+            }));
+            response.setStatusCode(200);
+            response.setMessage("Election updated!");
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
+
     public ApiResponse allElectionOfOwner(String id, String domain) {
         ApiResponse response = new ApiResponse();
         try {
@@ -70,7 +89,8 @@ public class ElectionDataService {
 
     public void removeElection(String userId) {
         userRepository.findByUserId(userId).map(u -> {
-            u.setElectionId(null);
+            u.setElectionId(0);
+            u.setVotes(0);
             return userRepository.save(u);
         });
     }
