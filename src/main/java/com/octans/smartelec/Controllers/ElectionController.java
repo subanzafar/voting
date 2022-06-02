@@ -5,6 +5,7 @@ import com.octans.smartelec.DataServices.ElectionDataService;
 import com.octans.smartelec.DataServices.FinishedElectionDataService;
 import org.springframework.http.MediaType;
 import com.octans.smartelec.Models.Election;
+import com.octans.smartelec.Models.FinishedDetail;
 import com.octans.smartelec.Models.FinishedElection;
 import com.octans.smartelec.Repositories.UserRepository;
 
@@ -72,6 +73,18 @@ public class ElectionController {
         return electionDataService.createElection(el);
     }
 
+    @GetMapping(path = "newFinishDetail/{name}/{url}/{votes}/{finishId}")
+    public ApiResponse crearteFinishDetail(@PathVariable String name, @PathVariable String url,
+            @PathVariable Integer votes,
+            @PathVariable Integer finishId) {
+        FinishedDetail el = new FinishedDetail();
+        el.setName(name);
+        el.setFinishId(finishId);
+        el.setImageUrl(url);
+        el.setVotes(votes);
+        return finishedElectionDataService.saveFinishDetail(el);
+    }
+
     @GetMapping(path = "editElection/{seat}/{des}/{eDate}/{id}")
     public ApiResponse updateteElection(@PathVariable String seat, @PathVariable String des,
             @PathVariable String eDate, @PathVariable Integer id) {
@@ -80,12 +93,6 @@ public class ElectionController {
 
     @PostMapping(path = "newFinishElection", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse crearteFinishedElection(@RequestBody FinishedElection election) {
-        // Election el = election;
-        // el.getUsers().clear();
-        // election.getUsers().forEach(u -> {
-        // User user = userRepository.findById(u.getOid()).get();
-        // el.addUser(user);
-        // });
         return finishedElectionDataService.saveNew(election);
     }
 
