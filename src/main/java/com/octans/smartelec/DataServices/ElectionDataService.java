@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.octans.smartelec.ApiResponse;
 import com.octans.smartelec.Models.Election;
+import com.octans.smartelec.Models.FinishedDetail;
 import com.octans.smartelec.Models.VoteDetail;
 import com.octans.smartelec.Repositories.ElectionRepository;
+import com.octans.smartelec.Repositories.FinishedDetailRepository;
 import com.octans.smartelec.Repositories.FinishedElectionRepository;
 import com.octans.smartelec.Repositories.UserRepository;
 import com.octans.smartelec.Repositories.VoteDetailRepository;
@@ -27,6 +29,9 @@ public class ElectionDataService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    FinishedDetailRepository fDetailRepository;
 
     public ApiResponse allElection(String domain) {
         ApiResponse response = new ApiResponse();
@@ -89,6 +94,12 @@ public class ElectionDataService {
 
     public void removeElection(String userId) {
         userRepository.findByUserId(userId).map(u -> {
+            FinishedDetail fDetail = new FinishedDetail();
+            fDetail.setFinishId(u.getElectionId());
+            fDetail.setImageUrl(u.getImageUrl());
+            fDetail.setName(u.getName());
+            fDetail.setVotes(u.getVotes());
+            fDetailRepository.save(fDetail);
             u.setElectionId(0);
             u.setVotes(0);
             return userRepository.save(u);
