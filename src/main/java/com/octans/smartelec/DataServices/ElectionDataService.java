@@ -47,6 +47,20 @@ public class ElectionDataService {
         }
     }
 
+    public ApiResponse allFinishDetail(Integer finishId) {
+        ApiResponse response = new ApiResponse();
+        try {
+            response.setStatusCode(200);
+            response.setMessage("Elections Found!");
+            response.setData(fDetailRepository.findAllByFinishId(finishId));
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
+
     public ApiResponse updateElection(Integer id, String name, String des, String endDate) {
         ApiResponse response = new ApiResponse();
         try {

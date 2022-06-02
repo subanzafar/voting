@@ -37,6 +37,11 @@ public class ElectionController {
         return finishedElectionDataService.findAll(domain);
     }
 
+    @GetMapping(path = "fDetails/{id}")
+    public ApiResponse allFinishDetails(@PathVariable Integer id) {
+        return electionDataService.allFinishDetail(id);
+    }
+
     @GetMapping(path = "elections/{domain}")
     public ApiResponse allElections(@PathVariable String domain) {
         return electionDataService.allElection(domain);
