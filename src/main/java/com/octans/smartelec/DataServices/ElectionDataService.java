@@ -1,10 +1,12 @@
 package com.octans.smartelec.DataServices;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.octans.smartelec.ApiResponse;
 import com.octans.smartelec.Models.Election;
 import com.octans.smartelec.Models.FinishedDetail;
+import com.octans.smartelec.Models.User;
 import com.octans.smartelec.Models.VoteDetail;
 import com.octans.smartelec.Repositories.ElectionRepository;
 import com.octans.smartelec.Repositories.FinishedDetailRepository;
@@ -36,14 +38,20 @@ public class ElectionDataService {
     public ApiResponse updateName(String userId, String name) {
         ApiResponse response = new ApiResponse();
         try {
-            userRepository.findByUserId(userId).map(u -> {
-                u.setName(name);
-                return userRepository.save(u);
-            });
-            fDetailRepository.findByUserId(userId).map(u -> {
-                u.setName(name);
-                return fDetailRepository.save(u);
-            });
+            Optional<User> user = userRepository.findByUserId(userId);
+            if (user != null) {
+                user.map(u -> {
+                    u.setName(name);
+                    return userRepository.save(u);
+                });
+            }
+            Optional<FinishedDetail> fDetail = fDetailRepository.findByUserId(userId);
+            if (fDetail != null) {
+                fDetail.map(u -> {
+                    u.setName(name);
+                    return fDetailRepository.save(u);
+                });
+            }
             response.setStatusCode(200);
             response.setMessage("Image updated!");
             return response;
