@@ -53,7 +53,7 @@ public class ElectionDataService {
                 });
             }
             response.setStatusCode(200);
-            response.setMessage("Image updated!");
+            response.setMessage("Name updated!");
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
@@ -65,14 +65,20 @@ public class ElectionDataService {
     public ApiResponse updateImage(String userId, String imageUrl) {
         ApiResponse response = new ApiResponse();
         try {
-            userRepository.findByUserId(userId).map(u -> {
-                u.setImageUrl(imageUrl);
-                return userRepository.save(u);
-            });
-            fDetailRepository.findByUserId(userId).map(u -> {
-                u.setImageUrl(imageUrl);
-                return fDetailRepository.save(u);
-            });
+            Optional<User> user = userRepository.findByUserId(userId);
+            if (user != null) {
+                user.map(u -> {
+                    u.setImageUrl(imageUrl);
+                    return userRepository.save(u);
+                });
+            }
+            Optional<FinishedDetail> fDetail = fDetailRepository.findByUserId(userId);
+            if (fDetail != null) {
+                fDetail.map(u -> {
+                    u.setImageUrl(imageUrl);
+                    return fDetailRepository.save(u);
+                });
+            }
             response.setStatusCode(200);
             response.setMessage("Image updated!");
             return response;
