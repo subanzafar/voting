@@ -31,8 +31,8 @@ public class ElectionController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping(path = "updateimage/{id}/{url}")
-    public ApiResponse updateImage(@PathVariable String id, @PathVariable String url) {
+    @PostMapping(path = "updateimage/{id}")
+    public ApiResponse updateImage(@PathVariable String id, @RequestBody String url) {
         return electionDataService.updateImage(id, url);
     }
 

@@ -9,6 +9,8 @@ import com.octans.smartelec.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,9 +49,9 @@ public class AuthController {
     // return userDataService.userExists(email);
     // }
 
-    @GetMapping(path = "test")
-    public String test() {
-        return "Helloo";
+    @PostMapping(path = "test")
+    public String test(@RequestBody String url) {
+        return "Helloo" + url;
     }
 
     // @GetMapping(path = "signin/{email}/{pass}")
