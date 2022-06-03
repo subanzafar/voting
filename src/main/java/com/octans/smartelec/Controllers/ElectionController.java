@@ -111,9 +111,9 @@ public class ElectionController {
         electionDataService.deleteElection(elecId);
     }
 
-    @GetMapping(path = "removeElection/{userId}")
-    public void removeElection(@PathVariable String userId) {
-        electionDataService.removeElection(userId);
+    @GetMapping(path = "removeElection/{userId}/{finishId}")
+    public void removeElection(@PathVariable String userId, @PathVariable Integer finishId) {
+        electionDataService.removeElection(userId, finishId);
     }
 
     @GetMapping(path = "votedetail/{userId}/{elecId}")

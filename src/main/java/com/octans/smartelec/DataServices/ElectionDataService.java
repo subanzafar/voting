@@ -106,10 +106,10 @@ public class ElectionDataService {
         electionRepo.deleteById(electionId);
     }
 
-    public void removeElection(String userId) {
+    public void removeElection(String userId, Integer finishId) {
         userRepository.findByUserId(userId).map(u -> {
             FinishedDetail fDetail = new FinishedDetail();
-            fDetail.setFinishId(u.getElectionId());
+            fDetail.setFinishId(finishId);
             fDetail.setImageUrl(u.getImageUrl());
             fDetail.setName(u.getName());
             fDetail.setVotes(u.getVotes());
