@@ -38,7 +38,7 @@ public class FinishedElectionDataService {
             FinishedElection e = repo.save(fElection);
             response.setStatusCode(200);
             response.setMessage("Elections saved!");
-            response.setData(e);
+            response.setData(e.getOid());
             return response;
         } catch (Exception e) {
             response.setStatusCode(500);
@@ -47,18 +47,18 @@ public class FinishedElectionDataService {
         }
     }
 
-    public ApiResponse saveFinishDetail(FinishedDetail fElection) {
-        ApiResponse response = new ApiResponse();
-        try {
-            FinishedDetail e = frepo.save(fElection);
-            response.setStatusCode(200);
-            response.setMessage("Elections saved!");
-            response.setData(e);
-            return response;
-        } catch (Exception e) {
-            response.setStatusCode(500);
-            response.setMessage(e.getMessage());
-            return response;
-        }
-    }
+    // public ApiResponse saveFinishDetail(FinishedDetail fElection) {
+    // ApiResponse response = new ApiResponse();
+    // try {
+    // FinishedDetail e = frepo.save(fElection);
+    // response.setStatusCode(200);
+    // response.setMessage("Elections saved!");
+    // response.setData(e);
+    // return response;
+    // } catch (Exception e) {
+    // response.setStatusCode(500);
+    // response.setMessage(e.getMessage());
+    // return response;
+    // }
+    // }
 }

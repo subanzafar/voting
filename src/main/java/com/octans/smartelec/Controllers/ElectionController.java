@@ -78,17 +78,17 @@ public class ElectionController {
         return electionDataService.createElection(el);
     }
 
-    @GetMapping(path = "newFinishDetail/{name}/{url}/{votes}/{finishId}")
-    public ApiResponse crearteFinishDetail(@PathVariable String name, @PathVariable String url,
-            @PathVariable Integer votes,
-            @PathVariable Integer finishId) {
-        FinishedDetail el = new FinishedDetail();
-        el.setName(name);
-        el.setFinishId(finishId);
-        el.setImageUrl(url);
-        el.setVotes(votes);
-        return finishedElectionDataService.saveFinishDetail(el);
-    }
+    // @GetMapping(path = "newFinishDetail/{name}/{url}/{votes}/{finishId}")
+    // public ApiResponse crearteFinishDetail(@PathVariable String name, @PathVariable String url,
+    //         @PathVariable Integer votes,
+    //         @PathVariable Integer finishId) {
+    //     FinishedDetail el = new FinishedDetail();
+    //     el.setName(name);
+    //     el.setFinishId(finishId);
+    //     el.setImageUrl(url);
+    //     el.setVotes(votes);
+    //     return finishedElectionDataService.saveFinishDetail(el);
+    // }
 
     @GetMapping(path = "editElection/{seat}/{des}/{eDate}/{id}")
     public ApiResponse updateteElection(@PathVariable String seat, @PathVariable String des,
