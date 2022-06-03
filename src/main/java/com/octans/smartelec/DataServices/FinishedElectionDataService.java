@@ -1,7 +1,6 @@
 package com.octans.smartelec.DataServices;
 
 import com.octans.smartelec.ApiResponse;
-import com.octans.smartelec.Models.FinishedDetail;
 import com.octans.smartelec.Models.FinishedElection;
 import com.octans.smartelec.Repositories.FinishedDetailRepository;
 import com.octans.smartelec.Repositories.FinishedElectionRepository;

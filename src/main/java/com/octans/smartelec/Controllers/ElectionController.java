@@ -5,7 +5,6 @@ import com.octans.smartelec.DataServices.ElectionDataService;
 import com.octans.smartelec.DataServices.FinishedElectionDataService;
 import org.springframework.http.MediaType;
 import com.octans.smartelec.Models.Election;
-import com.octans.smartelec.Models.FinishedDetail;
 import com.octans.smartelec.Models.FinishedElection;
 import com.octans.smartelec.Repositories.UserRepository;
 
@@ -31,6 +30,16 @@ public class ElectionController {
 
     @Autowired
     UserRepository userRepository;
+
+    @GetMapping(path = "updateimage/{id}/{url}")
+    public ApiResponse updateImage(@PathVariable String id, @PathVariable String url) {
+        return electionDataService.updateImage(id, url);
+    }
+
+    @GetMapping(path = "updatename/{id}/{name}")
+    public ApiResponse updateName(@PathVariable String id, @PathVariable String name) {
+        return electionDataService.updateName(id, name);
+    }
 
     @GetMapping(path = "felections/{domain}")
     public ApiResponse allFinishedElections(@PathVariable String domain) {
@@ -79,15 +88,16 @@ public class ElectionController {
     }
 
     // @GetMapping(path = "newFinishDetail/{name}/{url}/{votes}/{finishId}")
-    // public ApiResponse crearteFinishDetail(@PathVariable String name, @PathVariable String url,
-    //         @PathVariable Integer votes,
-    //         @PathVariable Integer finishId) {
-    //     FinishedDetail el = new FinishedDetail();
-    //     el.setName(name);
-    //     el.setFinishId(finishId);
-    //     el.setImageUrl(url);
-    //     el.setVotes(votes);
-    //     return finishedElectionDataService.saveFinishDetail(el);
+    // public ApiResponse crearteFinishDetail(@PathVariable String name,
+    // @PathVariable String url,
+    // @PathVariable Integer votes,
+    // @PathVariable Integer finishId) {
+    // FinishedDetail el = new FinishedDetail();
+    // el.setName(name);
+    // el.setFinishId(finishId);
+    // el.setImageUrl(url);
+    // el.setVotes(votes);
+    // return finishedElectionDataService.saveFinishDetail(el);
     // }
 
     @GetMapping(path = "editElection/{seat}/{des}/{eDate}/{id}")

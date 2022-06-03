@@ -33,6 +33,48 @@ public class ElectionDataService {
     @Autowired
     FinishedDetailRepository fDetailRepository;
 
+    public ApiResponse updateName(String userId, String name) {
+        ApiResponse response = new ApiResponse();
+        try {
+            userRepository.findByUserId(userId).map(u -> {
+                u.setName(name);
+                return userRepository.save(u);
+            });
+            fDetailRepository.findByUserId(userId).map(u -> {
+                u.setName(name);
+                return fDetailRepository.save(u);
+            });
+            response.setStatusCode(200);
+            response.setMessage("Image updated!");
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
+
+    public ApiResponse updateImage(String userId, String imageUrl) {
+        ApiResponse response = new ApiResponse();
+        try {
+            userRepository.findByUserId(userId).map(u -> {
+                u.setImageUrl(imageUrl);
+                return userRepository.save(u);
+            });
+            fDetailRepository.findByUserId(userId).map(u -> {
+                u.setImageUrl(imageUrl);
+                return fDetailRepository.save(u);
+            });
+            response.setStatusCode(200);
+            response.setMessage("Image updated!");
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
+
     public ApiResponse allElection(String domain) {
         ApiResponse response = new ApiResponse();
         try {
@@ -109,6 +151,7 @@ public class ElectionDataService {
     public void removeElection(String userId, Integer finishId) {
         userRepository.findByUserId(userId).map(u -> {
             FinishedDetail fDetail = new FinishedDetail();
+            fDetail.setUserId(u.getUserId());
             fDetail.setFinishId(finishId);
             fDetail.setImageUrl(u.getImageUrl());
             fDetail.setName(u.getName());

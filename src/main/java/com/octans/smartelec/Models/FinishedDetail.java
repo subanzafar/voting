@@ -23,6 +23,7 @@ public class FinishedDetail {
     @Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer oid;
+    private String userId;
     private String name;
     private String imageUrl;
     private Integer votes;
