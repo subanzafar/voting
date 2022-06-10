@@ -34,6 +34,11 @@ public class AuthController {
         return userDataService.allUsers(domain);
     }
 
+    @GetMapping(path = "users/delete/{userId}")
+    public ApiResponse deletebByUserId(@PathVariable String userId) {
+        return userDataService.deleteUser(userId);
+    }
+
     @GetMapping(path = "elecCands/{elecId}")
     public ApiResponse allUsersOfElec(@PathVariable Integer elecId) {
         return userDataService.allUsersOfElec(elecId);

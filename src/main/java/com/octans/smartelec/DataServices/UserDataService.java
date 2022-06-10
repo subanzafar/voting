@@ -57,6 +57,20 @@ public class UserDataService {
         }
     }
 
+    public ApiResponse deleteUser(String userId) {
+        ApiResponse response = new ApiResponse();
+        try {
+            userRepository.deleteByUserId(userId);
+            response.setStatusCode(200);
+            response.setMessage("User Created!");
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
+
     // public ApiResponse signIn(String email, String password) {
     // ApiResponse response = new ApiResponse();
 
