@@ -29,5 +29,5 @@ public class User {
     private String imageUrl;
     private Integer votes;
     private Integer electionId;
-
+    private boolean available;
 }

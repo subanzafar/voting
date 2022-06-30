@@ -71,6 +71,23 @@ public class UserDataService {
         }
     }
 
+    public ApiResponse updateUser(String userId, boolean available) {
+        ApiResponse response = new ApiResponse();
+        try {
+            userRepository.findByUserId(userId).map(u -> {
+                u.setAvailable(available);
+                return userRepository.save(u);
+            });
+            response.setStatusCode(200);
+            response.setMessage("User Created!");
+            return response;
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage(e.getMessage());
+            return response;
+        }
+    }
+
     // public ApiResponse signIn(String email, String password) {
     // ApiResponse response = new ApiResponse();
 

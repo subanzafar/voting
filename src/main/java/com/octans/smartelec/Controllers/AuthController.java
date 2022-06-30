@@ -39,6 +39,11 @@ public class AuthController {
         return userDataService.deleteUser(userId);
     }
 
+    @GetMapping(path = "users/update/{userId}/{status}")
+    public ApiResponse updateUserStatus(@PathVariable String userId, @PathVariable Boolean status) {
+        return userDataService.updateUser(userId, status);
+    }
+
     @GetMapping(path = "elecCands/{elecId}")
     public ApiResponse allUsersOfElec(@PathVariable Integer elecId) {
         return userDataService.allUsersOfElec(elecId);
@@ -91,6 +96,7 @@ public class AuthController {
         user.setElectionId(0);
         user.setImageUrl("img");
         user.setVotes(0);
+        user.setAvailable(true);
         return userDataService.signUp(user);
     }
 
