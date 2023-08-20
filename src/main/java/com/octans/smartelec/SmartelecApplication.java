@@ -10,4 +10,8 @@ public class SmartelecApplication {
 		SpringApplication.run(SmartelecApplication.class, args);
 	}
 
+
+
+	
+
 }
